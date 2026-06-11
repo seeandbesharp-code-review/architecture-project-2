@@ -1,0 +1,26 @@
+<p-menubar [model]="items()">
+    <ng-template pTemplate="start">
+        <a routerLink="/" class="brand-link">
+            <span class="brand-mark">CS</span>
+            <span class="brand-text">Chinese Sale</span>
+        </a>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+        @if (currentUser(); as user) {
+            <div class="user-pill">
+                <div class="avatar-circle">{{ user.firstName[0] }}</div>
+                <div class="user-info">
+                    <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+                    @if (user.role === 'Admin') {
+                        <span class="role-badge">מנהל</span>
+                    }
+                </div>
+            </div>
+        } @else {
+            <a routerLink="/login">
+                <button pButton label="התחברות" icon="pi pi-sign-in" class="btn-login"></button>
+            </a>
+        }
+    </ng-template>
+</p-menubar>

@@ -1,0 +1,39 @@
+<p-toast />
+
+<p-dialog header="עריכת תורם" [modal]="true" [(visible)]="visible" [style]="{ width: '28rem' }" styleClass="cs-dialog">
+    <div class="form-field">
+        <label>מזהה</label>
+        <span class="id-display">{{ donor.id }}</span>
+    </div>
+
+    <div class="form-field">
+        <label for="ufname">שם פרטי *</label>
+        <input pInputText id="ufname" class="w-full" [(ngModel)]="donor.firstName" />
+        @if (submitted && !donor.firstName.trim()) {
+            <span class="field-error">שדה חובה</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="ulname">שם משפחה *</label>
+        <input pInputText id="ulname" class="w-full" [(ngModel)]="donor.lastName" />
+        @if (submitted && !donor.lastName.trim()) {
+            <span class="field-error">שדה חובה</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="uemail">אימייל *</label>
+        <input pInputText id="uemail" type="email" class="w-full" [(ngModel)]="donor.eMail" />
+        @if (submitted && !donor.eMail.trim()) {
+            <span class="field-error">שדה חובה</span>
+        } @else if (submitted && donor.eMail.trim() && !donor.eMail.includes('@')) {
+            <span class="field-error">כתובת אימייל לא תקינה</span>
+        }
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button label="ביטול" severity="secondary" [text]="true" (click)="visible.set(false)" />
+        <p-button label="עדכן" icon="pi pi-check" (click)="saveUpdate()" />
+    </ng-template>
+</p-dialog>

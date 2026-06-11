@@ -1,0 +1,126 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="gifts-page">
+    <div class="page-header">
+        <div>
+            <h1><i class="pi pi-gift"></i> מתנות</h1>
+            <p>צפייה ברשימת המתנות, סינון לפי קטגוריה ורכישה</p>
+        </div>
+        @if (user()?.role === 'Admin') {
+            <p-button label="מתנה חדשה" icon="pi pi-plus" (onClick)="openNew()" />
+        }
+    </div>
+
+    <app-gift-by-category [categories]="categories()" (onCategoryChange)="onFilterChanged($event)" />
+
+    @if (products().length === 0) {
+        <div class="empty-state">
+            <i class="pi pi-gift"></i>
+            <h3>אין מתנות להצגה</h3>
+            <p>נסו לשנות סינון או הוסיפו מתנה חדשה</p>
+        </div>
+    } @else {
+        <div class="gift-grid">
+            @for (product of products(); track product.id) {
+            <article class="gift-card" [style.border-top-color]="getCategoryColor(product.categoryId)">
+                <div class="gift-image-container">
+                    @if (product.img) {
+                    <img [src]="serverUrl + '/' + product.img" [alt]="product.name" class="gift-image" />
+                    } @else {
+                    <div class="no-image"><i class="pi pi-image"></i></div>
+                    }
+                    <span class="gift-price">{{ product.price }} ₪</span>
+                </div>
+
+                <div class="gift-content">
+                    <h3 class="gift-title">{{ product.name }}</h3>
+                    <p class="gift-description">{{ product.description || '—' }}</p>
+
+                    @if (getWinner(product.id); as winner) {
+                    <div class="winner-badge">
+                        <i class="pi pi-trophy"></i>
+                        <div>
+                            <strong>הוגרל</strong>
+                            <span>{{ winner.user?.firstName }} {{ winner.user?.lastName }}</span>
+                        </div>
+                    </div>
+                    }
+
+                    <div class="gift-actions">
+                        @if (user()?.role === 'Admin') {
+                        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary"
+                            [disabled]="getWinner(product.id) !== undefined" (onClick)="editProduct(product)" />
+                        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                            [disabled]="getWinner(product.id) !== undefined" (onClick)="deleteProduct(product)" />
+                        <p-button icon="pi pi-sparkles" [rounded]="true" [text]="true" severity="help"
+                            [disabled]="getWinner(product.id) !== undefined" (onClick)="onExecuteDraw(product.id)" />
+                        }
+                        <p-button icon="pi pi-shopping-cart" label="הוסף לסל" size="small"
+                            [disabled]="getWinner(product.id) !== undefined" (onClick)="addGiftToCart(product)" />
+                    </div>
+                </div>
+            </article>
+            }
+        </div>
+    }
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{ width: 'min(480px, 95vw)' }" header="פרטי מתנה" [modal]="true"
+    styleClass="cs-dialog" [draggable]="false" [resizable]="false">
+
+    <div class="form-field">
+        <label for="name">שם המתנה *</label>
+        <input type="text" pInputText id="name" [(ngModel)]="product.name" placeholder="שם המתנה" class="w-full" />
+        @if (submitted && !product.name?.trim()) {
+            <span class="field-error">שדה חובה</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="description">תיאור</label>
+        <textarea id="description" pInputTextarea [(ngModel)]="product.description" rows="3"
+            placeholder="תיאור קצר..." class="w-full"></textarea>
+    </div>
+
+    <div class="form-field">
+        <label for="price">מחיר כרטיס *</label>
+        <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="ILS"
+            locale="he-IL" class="w-full" />
+        @if (submitted && (!product.price || product.price <= 0)) {
+            <span class="field-error">יש להזין מחיר חיובי</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label>קטגוריה *</label>
+        <p-select [options]="categories()" [(ngModel)]="product.categoryId" optionLabel="name" optionValue="id"
+            placeholder="בחר קטגוריה" class="w-full" />
+        @if (submitted && !product.categoryId) {
+            <span class="field-error">יש לבחור קטגוריה</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label>תורם *</label>
+        <p-select [options]="doners()" [(ngModel)]="product.idDoner" optionLabel="firstName" optionValue="id"
+            placeholder="בחר תורם" class="w-full" />
+        @if (submitted && !product.idDoner) {
+            <span class="field-error">יש לבחור תורם</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label>תמונה</label>
+        <div class="file-upload" (click)="fileInput.click()">
+            <i class="pi pi-upload"></i>
+            <span>{{ selectedFile ? selectedFile.name : 'לחץ לבחירת תמונה' }}</span>
+            <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden />
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button label="ביטול" severity="secondary" [text]="true" (click)="hideDialog()" />
+        <p-button label="שמור" icon="pi pi-check" (click)="saveProduct()" />
+    </ng-template>
+</p-dialog>

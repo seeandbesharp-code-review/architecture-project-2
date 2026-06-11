@@ -1,0 +1,14 @@
+[
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60501" },
+    "userId": { "$oid": "674a1001a1b2c3d4e5f60001" },
+    "giftId": { "$oid": "674a1001a1b2c3d4e5f60302" },
+    "quantity": 2
+  },
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60502" },
+    "userId": { "$oid": "674a1001a1b2c3d4e5f60002" },
+    "giftId": { "$oid": "674a1001a1b2c3d4e5f60301" },
+    "quantity": 1
+  }
+]

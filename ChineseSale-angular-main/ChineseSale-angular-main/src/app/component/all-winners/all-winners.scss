@@ -1,0 +1,91 @@
+.winners-page {
+  animation: fadeIn 0.35s ease;
+}
+
+.text-center {
+  text-align: center;
+}
+
+:host ::ng-deep .winners-table .p-datatable-thead { display: none; }
+
+:host ::ng-deep .winners-table .p-datatable-tbody > tr.winner-row {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  background: white !important;
+  margin-bottom: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0 !important;
+  border-right: 4px solid #f59e0b !important;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(245, 158, 11, 0.15);
+  }
+}
+
+.gift-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gift-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff7ed;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.gift-name {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1.05rem;
+}
+
+.user-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #1e293b;
+
+  i { color: #f59e0b; font-size: 0.85rem; }
+}
+
+.user-info small {
+  display: block;
+  color: #94a3b8;
+  margin-top: 0.15rem;
+  padding-right: 1.35rem;
+}
+
+.win-tag {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: #f59e0b !important;
+  color: white !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

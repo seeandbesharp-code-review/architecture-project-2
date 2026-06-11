@@ -1,0 +1,11 @@
+**/node_modules/
+**/bin/
+**/obj/
+**/.angular/
+**/dist/
+**/.vs/
+**/Logs/
+*.user
+*.suo
+.env
+.env.*

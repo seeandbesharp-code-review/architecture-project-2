@@ -1,0 +1,81 @@
+<p-toast />
+
+<div class="donor-page">
+    <header class="donor-header">
+        <div class="donor-header__text">
+            <h1><i class="pi pi-users"></i> ניהול תורמים</h1>
+            <p>צפייה, עריכה וניהול תורמים והמתנות שלהם</p>
+        </div>
+        <app-add-donor (donorSaved)="loadDonors()" />
+    </header>
+
+    <div class="search-bar">
+        <div class="search-bar__type">
+            <span class="search-bar__label">חיפוש לפי</span>
+            <p-selectButton [options]="searchOptions" [(ngModel)]="searchType"
+                optionLabel="label" optionValue="value" styleClass="search-toggle" />
+        </div>
+        <div class="search-bar__field">
+            <p-iconfield iconPosition="right">
+                <p-inputicon class="pi pi-search" />
+                <input pInputText type="search" placeholder="הקליד/י לחיפוש..."
+                    (input)="onSearch($event)" class="search-input" />
+            </p-iconfield>
+        </div>
+    </div>
+
+    @if (donors().length > 0) {
+        <div class="donor-list">
+            <p-accordion [multiple]="false" class="donor-accordion">
+                @for (currentDonor of donors(); track currentDonor.id) {
+                    <p-accordion-panel [value]="currentDonor.id.toString()">
+                        <p-accordion-header>
+                            <div class="donor-row">
+                                <div class="donor-name">
+                                    <div class="avatar-sm">{{ currentDonor.firstName[0] }}</div>
+                                    <div class="donor-name__text">
+                                        <strong>{{ currentDonor.firstName }} {{ currentDonor.lastName }}</strong>
+                                        <small>{{ currentDonor.eMail }}</small>
+                                    </div>
+                                </div>
+                                <span class="gift-badge">{{ currentDonor.gifts?.length || 0 }} מתנות</span>
+                                <div class="donor-actions">
+                                    <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                                        (click)="$event.stopPropagation(); openUpdate(currentDonor)"></button>
+                                    <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
+                                        (click)="$event.stopPropagation(); deleteDonor(currentDonor)"></button>
+                                </div>
+                            </div>
+                        </p-accordion-header>
+
+                        <p-accordion-content>
+                            <div class="gifts-panel">
+                                <h3>מתנות התורם</h3>
+                                @if ((currentDonor.gifts?.length ?? 0) > 0) {
+                                    <ul class="gift-list">
+                                        @for (gift of currentDonor.gifts; track gift.id) {
+                                            <li>
+                                                <span>{{ gift.name }}</span>
+                                                <span class="price-tag">{{ gift.price | currency:'ILS' }}</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                } @else {
+                                    <p class="no-gifts">אין מתנות רשומות לתורם זה</p>
+                                }
+                            </div>
+                        </p-accordion-content>
+                    </p-accordion-panel>
+                }
+            </p-accordion>
+        </div>
+    } @else {
+        <div class="empty-state">
+            <div class="empty-state__icon"><i class="pi pi-users"></i></div>
+            <h3>אין תורמים להצגה</h3>
+            <p>הוסיפ/י תורם חדש או נסו חיפוש אחר</p>
+        </div>
+    }
+
+    <app-update-donor [donorTest]="selectedDonor()" (donorSaved)="loadDonors()" />
+</div>

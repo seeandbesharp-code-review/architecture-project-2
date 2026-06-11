@@ -1,0 +1,19 @@
+<div class="category-filters">
+       <p-button label="הכל" [outlined]="selectedId !== null" (onClick)="selectCategory(null)"></p-button>
+       @for (cat of categories(); track cat.id) {
+         <p-button 
+         class="custom-cat-btn"
+            [label]="cat.name" 
+            [outlined]="selectedId !== cat.id"
+             [style]="{
+                'border-color': cat.color,
+                'color': selectedId === cat.id ? 'white' : cat.color,
+                'background-color': selectedId === cat.id ? cat.color : 'transparent'
+            }" 
+            (onClick)="selectCategory(cat.id)">
+         </p-button>
+       }
+    </div>
+
+            <!-- [style]="{ '--cat-color': cat.color }" -->
+

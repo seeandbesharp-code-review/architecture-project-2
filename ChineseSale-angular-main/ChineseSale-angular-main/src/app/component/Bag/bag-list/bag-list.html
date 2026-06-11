@@ -1,0 +1,130 @@
+<p-toast />
+
+<div class="bag-page">
+    <div class="bag-header">
+        <div>
+            <h1><i class="pi pi-shopping-cart"></i> עגלת הקניות</h1>
+            <p>סקיר/י את המתנות שלך לפני הרכישה</p>
+        </div>
+    </div>
+
+    <div class="cart-table-card">
+        @if (bag().length > 0) {
+            <p-table [value]="bag()" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>מתנה</th>
+                        <th>תיאור</th>
+                        <th>מחיר</th>
+                        <th>כמות</th>
+                        <th style="width: 10rem">פעולות</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>
+                            <div class="gift-cell">
+                                @if (item.gift?.img) {
+                                    <img [src]="item.gift.img" [alt]="item.gift?.name" />
+                                } @else {
+                                    <i class="pi pi-gift text-2xl text-primary"></i>
+                                }
+                                <strong>{{ item.gift?.name || item.Gift?.name }}</strong>
+                            </div>
+                        </td>
+                        <td>{{ item.gift?.description || item.Gift?.description || '—' }}</td>
+                        <td>{{ (item.gift?.price || item.Gift?.price) | currency:'ILS' }}</td>
+                        <td><span class="font-bold text-primary">{{ item.quantity ?? item.Quantity }}</span></td>
+                        <td>
+                            <div class="flex gap-1">
+                                <button pButton type="button" icon="pi pi-plus"
+                                        class="p-button-success p-button-text p-button-sm"
+                                        (click)="plusQuent(item)" pTooltip="הוסף כמות"></button>
+                                <button pButton type="button" icon="pi pi-minus"
+                                        class="p-button-secondary p-button-text p-button-sm"
+                                        (click)="minusQuent(item)" pTooltip="הורד כמות"></button>
+                                <button pButton type="button" icon="pi pi-trash"
+                                        class="p-button-danger p-button-text p-button-sm"
+                                        (click)="deleteBag(item.id || item.Id)" pTooltip="הסר"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        } @else {
+            <div class="empty-state">
+                <i class="pi pi-shopping-bag"></i>
+                <h3>הסל שלך ריק</h3>
+                <p>גש/י לקטalog המתנות והוסף/י פריטים לסל</p>
+                <p-button label="למתנות" icon="pi pi-gift" routerLink="/gift" styleClass="mt-3"></p-button>
+            </div>
+        }
+    </div>
+
+    @if (bag().length > 0) {
+        <div class="checkout-bar">
+            <div>
+                <div class="total-label">סה"כ לתשלום</div>
+                <div class="total-amount">{{ totalPrice() | currency:'ILS' }}</div>
+            </div>
+            <button pButton
+                    label="בצע רכישה"
+                    icon="pi pi-credit-card"
+                    class="p-button-lg"
+                    [loading]="isCheckingOut()"
+                    (click)="openPaymentDialog()">
+            </button>
+        </div>
+    }
+
+    <p-dialog header="פרטי תשלום" [(visible)]="displayPaymentDialog"
+              [modal]="true" [style]="{width: '450px'}" [draggable]="false">
+        <form #paymentForm="ngForm" (ngSubmit)="processPurchase()">
+            <div class="flex flex-column gap-3 mt-2">
+                <div class="flex flex-column gap-1">
+                    <label>מספר כרטיס</label>
+                    <input pInputText name="cardNumber" [(ngModel)]="paymentInfo.cardNumber"
+                           required pattern="^[0-9]{16}$" #card="ngModel"
+                           placeholder="16 ספרות" maxlength="16" />
+                    @if (card.invalid && card.dirty) {
+                        <small class="p-error">מספר כרטיס חייב להכיל 16 ספרות</small>
+                    }
+                </div>
+
+                <div class="flex gap-3">
+                    <div class="flex flex-column gap-1 flex-grow-1">
+                        <label>תוקף</label>
+                        <input pInputText name="expiry" [(ngModel)]="paymentInfo.expiry"
+                               required pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$" #expiry="ngModel"
+                               placeholder="MM/YY" maxlength="5" />
+                    </div>
+                    <div class="flex flex-column gap-1 flex-grow-1">
+                        <label>CVV</label>
+                        <input pInputText name="cvv" [(ngModel)]="paymentInfo.cvv"
+                               required pattern="^[0-9]{3}$" #cvv="ngModel"
+                               placeholder="000" maxlength="3" />
+                    </div>
+                </div>
+
+                <div class="flex flex-column gap-1">
+                    <label>שם בעל/ת הכרטיס</label>
+                    <input pInputText name="holderName" [(ngModel)]="paymentInfo.holderName"
+                           required minlength="3" #holder="ngModel" placeholder="שם מלא" />
+                </div>
+
+                <div class="surface-100 p-3 border-round text-center">
+                    <span class="text-600">סה"כ: </span>
+                    <span class="text-xl font-bold text-primary">{{ totalPrice() | currency:'ILS' }}</span>
+                </div>
+            </div>
+
+            <div class="flex justify-content-end gap-2 mt-4">
+                <button pButton type="button" label="ביטול" class="p-button-text"
+                        (click)="displayPaymentDialog.set(false)"></button>
+                <button pButton type="submit" label="אשר רכישה" icon="pi pi-check"
+                        [disabled]="paymentForm.invalid" [loading]="isCheckingOut()"></button>
+            </div>
+        </form>
+    </p-dialog>
+</div>

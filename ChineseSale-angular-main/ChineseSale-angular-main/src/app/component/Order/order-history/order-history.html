@@ -1,0 +1,43 @@
+<p-toast />
+
+<div class="history-page">
+    <div class="page-header">
+        <h1><i class="pi pi-history"></i> היסטוריית הזמנות</h1>
+        <p>כל הרכישות שביצעת, מקובצות לפי הזמנה</p>
+    </div>
+
+    @if (history().length > 0) {
+        <div class="history-list">
+            @for (order of history(); track order.orderNumber) {
+                <div class="history-card">
+                    <div class="history-header" (click)="toggleOrder(order.orderNumber)">
+                        <i class="pi" [ngClass]="openedOrderId === order.orderNumber ? 'pi-chevron-down' : 'pi-chevron-left'"></i>
+                        <div class="history-meta">
+                            <strong>הזמנה #{{ order.orderNumber }}</strong>
+                            <small>{{ order.items?.length || 0 }} פריטים</small>
+                        </div>
+                        <span class="history-total">{{ order.totalAmount | currency:'ILS' }}</span>
+                    </div>
+
+                    @if (openedOrderId === order.orderNumber) {
+                        <div class="history-items">
+                            @for (item of order.items; track $index) {
+                                <div class="history-item">
+                                    <i class="pi pi-gift"></i>
+                                    <span class="item-name">{{ item.giftName }}</span>
+                                    <span class="item-price">{{ item.price | currency:'ILS' }}</span>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="empty-state">
+            <i class="pi pi-shopping-bag"></i>
+            <h3>אין הזמנות קודמות</h3>
+            <p>לאחר רכישה מהעגלה, ההיסטוריה תופיע כאן</p>
+        </div>
+    }
+</div>

@@ -1,0 +1,85 @@
+<div class="home-page">
+    <div class="hero-section">
+        <div>
+            <h1>ברוכים הבאים{{ userName() ? ', ' + userName() : '' }}</h1>
+            <p>מערכת מכירה סינית — ניהול מתנות, הגרלות ועגלת קניות</p>
+        </div>
+        <div class="current-date-box">
+            <i class="pi pi-calendar"></i>
+            {{ currentDate }}
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="pi pi-users"></i></div>
+            <div>
+                <span class="stat-label">תורמים במערכת</span>
+                <div class="stat-value">{{ stats().donors }}</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon"><i class="pi pi-gift"></i></div>
+            <div>
+                <span class="stat-label">מתנות פעילות</span>
+                <div class="stat-value">{{ stats().gifts }}</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon"><i class="pi pi-wallet"></i></div>
+            <div>
+                <span class="stat-label">שווי מתנות כולל</span>
+                <div class="stat-value">₪{{ stats().totalValue | number }}</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">פעולות מהירות</h2>
+    <div class="nav-grid">
+        <a class="quick-nav-card" routerLink="/gift">
+            <div class="nav-content">
+                <i class="pi pi-gift"></i>
+                <div>
+                    <h3>רשימת מתנות</h3>
+                    <p>צפייה, רכישה והוספה לסל</p>
+                </div>
+            </div>
+            <i class="pi pi-chevron-left arrow"></i>
+        </a>
+
+        <a class="quick-nav-card" routerLink="/donor">
+            <div class="nav-content">
+                <i class="pi pi-id-card"></i>
+                <div>
+                    <h3>ניהול תורמים</h3>
+                    <p>עריכה, הוספה וצפייה במתנות</p>
+                </div>
+            </div>
+            <i class="pi pi-chevron-left arrow"></i>
+        </a>
+
+        <a class="quick-nav-card" routerLink="/category">
+            <div class="nav-content">
+                <i class="pi pi-tags"></i>
+                <div>
+                    <h3>ניהול קטגוריות</h3>
+                    <p>הגדרה וצביעה של סוגי מתנות</p>
+                </div>
+            </div>
+            <i class="pi pi-chevron-left arrow"></i>
+        </a>
+
+        <a class="quick-nav-card" routerLink="/bag">
+            <div class="nav-content">
+                <i class="pi pi-shopping-cart"></i>
+                <div>
+                    <h3>עגלת הקניות</h3>
+                    <p>סיום רכישה ותשלום</p>
+                </div>
+            </div>
+            <i class="pi pi-chevron-left arrow"></i>
+        </a>
+    </div>
+</div>

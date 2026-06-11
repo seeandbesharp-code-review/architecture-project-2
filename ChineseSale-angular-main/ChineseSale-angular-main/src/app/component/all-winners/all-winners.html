@@ -1,0 +1,41 @@
+<p-toast />
+
+<div class="winners-page">
+    <div class="page-header text-center">
+        <h1><i class="pi pi-trophy"></i> נבחרת הזוכים</h1>
+        <p>כל הזוכים בהגרלות המתנות במערכת</p>
+    </div>
+
+    @if (allWinners().length > 0) {
+        <p-table [value]="allWinners()" [paginator]="true" [rows]="8" styleClass="winners-table">
+            <ng-template pTemplate="body" let-winner>
+                <tr class="winner-row">
+                    <td class="gift-col">
+                        <div class="gift-wrap">
+                            <div class="gift-icon"><i class="pi pi-gift"></i></div>
+                            <span class="gift-name">{{ winner.gift?.name || '—' }}</span>
+                        </div>
+                    </td>
+                    <td class="user-col">
+                        <div class="user-info">
+                            <div class="user-main">
+                                <i class="pi pi-star-fill"></i>
+                                <span>{{ winner.user?.firstName }} {{ winner.user?.lastName }}</span>
+                            </div>
+                            <small>{{ winner.user?.email }}</small>
+                        </div>
+                    </td>
+                    <td class="badge-col">
+                        <span class="win-tag"><i class="pi pi-trophy"></i> זוכה</span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    } @else {
+        <div class="empty-state">
+            <i class="pi pi-trophy"></i>
+            <h3>עדיין אין זוכים</h3>
+            <p>הזוכים יופיעו כאן לאחר ביצוע הגרלות</p>
+        </div>
+    }
+</div>

@@ -1,0 +1,73 @@
+.bag-page {
+  animation: fadeIn 0.35s ease;
+}
+
+.bag-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+  }
+
+  p {
+    margin: 0.25rem 0 0;
+    color: #64748b;
+  }
+}
+
+.cart-table-card {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.08);
+  overflow: hidden;
+}
+
+.checkout-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+
+  .total-label {
+    color: #64748b;
+    font-size: 0.95rem;
+  }
+
+  .total-amount {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #6366f1;
+  }
+}
+
+.gift-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: #f1f5f9;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,35 @@
+<p-toast />
+
+<div class="draw-page">
+    <div class="page-header">
+        <h1><i class="pi pi-sparkles"></i> מרכז הגרלות</h1>
+        <p>בחר מתנה והפעל הגרלה לבחירת זוכה</p>
+    </div>
+
+    @if (gifts().length > 0) {
+        <div class="gift-grid">
+            @for (gift of gifts(); track gift.id) {
+                <div class="draw-card">
+                    <div class="draw-icon"><i class="pi pi-gift"></i></div>
+                    <h3>{{ gift.name }}</h3>
+                    <span class="draw-price">{{ gift.price | currency:'ILS' }}</span>
+                    <button
+                        pButton
+                        label="הפעל הגרלה"
+                        icon="pi pi-bolt"
+                        class="draw-btn"
+                        [loading]="drawingId() === gift.id"
+                        [disabled]="drawingId() !== null"
+                        (click)="onExecuteDraw(gift.id)">
+                    </button>
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="empty-state">
+            <i class="pi pi-gift"></i>
+            <h3>אין מתנות להגרלה</h3>
+            <p>הוסף מתנות למערכת כדי להפעיל הגרלות</p>
+        </div>
+    }
+</div>

@@ -1,0 +1,14 @@
+[
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60201" },
+    "firstName": "משה",
+    "lastName": "גולדשטיין",
+    "email": "moshe.goldstein@donor.com"
+  },
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60202" },
+    "firstName": "רחל",
+    "lastName": "בן-דוד",
+    "email": "rachel.bendavid@donor.com"
+  }
+]

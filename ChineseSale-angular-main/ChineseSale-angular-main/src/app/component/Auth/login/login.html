@@ -1,0 +1,50 @@
+<p-toast />
+
+<div class="auth-page">
+    <p-card styleClass="auth-card shadow-4 border-round-2xl">
+        <div class="auth-header">
+            <div class="auth-icon"><i class="pi pi-user"></i></div>
+            <h2>כניסה למערכת</h2>
+            <p>שמחים לראות אותך שוב!</p>
+        </div>
+
+        <div class="flex flex-column gap-4 px-2 pb-2">
+            <div class="flex flex-column gap-2">
+                <label for="email" class="font-semibold">כתובת אימייל</label>
+                <span class="p-input-icon-left w-full">
+                    <i class="pi pi-envelope"></i>
+                    <input pInputText id="email"
+                           [(ngModel)]="loginData.Email"
+                           placeholder="email@example.com"
+                           class="w-full" />
+                </span>
+            </div>
+
+            <div class="flex flex-column gap-2">
+                <label for="pass" class="font-semibold">סיסמה</label>
+                <p-password id="pass"
+                            [(ngModel)]="loginData.Password"
+                            [toggleMask]="true"
+                            [feedback]="false"
+                            placeholder="הכנס/י סיסמה"
+                            styleClass="w-full"
+                            inputStyleClass="w-full">
+                </p-password>
+            </div>
+
+            <p-button label="התחברות"
+                      icon="pi pi-sign-in"
+                      (click)="onLogin()"
+                      [loading]="isLoading()"
+                      styleClass="w-full p-button-lg">
+            </p-button>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <div class="auth-footer">
+                <span>עדיין אין לך חשבון?</span>
+                <p-button label="הרשמה" link routerLink="/register" styleClass="font-bold"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

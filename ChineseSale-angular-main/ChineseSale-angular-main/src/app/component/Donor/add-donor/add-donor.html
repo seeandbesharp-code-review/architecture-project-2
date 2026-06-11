@@ -1,0 +1,36 @@
+<p-toast />
+
+<p-button (click)="showDialog()" label="הוסף תורם" icon="pi pi-plus" class="btn-add-donor" />
+
+<p-dialog header="תורם חדש" [modal]="true" [(visible)]="visible" [style]="{ width: '28rem' }" styleClass="cs-dialog">
+    <div class="form-field">
+        <label for="fname">שם פרטי *</label>
+        <input pInputText id="fname" class="w-full" [(ngModel)]="newDonor.firstName" autocomplete="given-name" />
+        @if (submitted && !newDonor.firstName.trim()) {
+            <span class="field-error">שדה חובה</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="lname">שם משפחה *</label>
+        <input pInputText id="lname" class="w-full" [(ngModel)]="newDonor.lastName" autocomplete="family-name" />
+        @if (submitted && !newDonor.lastName.trim()) {
+            <span class="field-error">שדה חובה</span>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="email">אימייל *</label>
+        <input pInputText id="email" type="email" class="w-full" [(ngModel)]="newDonor.eMail" autocomplete="email" />
+        @if (submitted && !newDonor.eMail.trim()) {
+            <span class="field-error">שדה חובה</span>
+        } @else if (submitted && newDonor.eMail.trim() && !newDonor.eMail.includes('@')) {
+            <span class="field-error">כתובת אימייל לא תקינה</span>
+        }
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button label="ביטול" severity="secondary" [text]="true" (click)="visible.set(false)" />
+        <p-button label="שמור" icon="pi pi-check" (click)="saveDonor()" />
+    </ng-template>
+</p-dialog>

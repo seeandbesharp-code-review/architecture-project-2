@@ -1,0 +1,9 @@
+:host {
+  display: inline-block;
+}
+
+:host ::ng-deep .btn-add-donor {
+  background: var(--cs-primary) !important;
+  border: none !important;
+  font-weight: 600 !important;
+}

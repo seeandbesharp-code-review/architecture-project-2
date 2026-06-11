@@ -1,0 +1,38 @@
+[
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60301" },
+    "name": "דובון חמוד",
+    "description": "דובון פרווה רך בגודל בינוני",
+    "img": "/images/teddy-bear.jpg",
+    "price": 50,
+    "donerId": { "$oid": "674a1001a1b2c3d4e5f60201" },
+    "categoryId": { "$oid": "674a1001a1b2c3d4e5f60101" }
+  },
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60302" },
+    "name": "אוזניות אלחוטיות",
+    "description": "אוזניות Bluetooth עם ביטול רעשים",
+    "img": "/images/headphones.jpg",
+    "price": 120,
+    "donerId": { "$oid": "674a1001a1b2c3d4e5f60202" },
+    "categoryId": { "$oid": "674a1001a1b2c3d4e5f60102" }
+  },
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60303" },
+    "name": "משחק קופסה",
+    "description": "משחק קופסה משפחתי ל-4 שחקנים",
+    "img": "/images/board-game.jpg",
+    "price": 80,
+    "donerId": { "$oid": "674a1001a1b2c3d4e5f60201" },
+    "categoryId": { "$oid": "674a1001a1b2c3d4e5f60101" }
+  },
+  {
+    "_id": { "$oid": "674a1001a1b2c3d4e5f60304" },
+    "name": "שובר מתנה",
+    "description": "שובר מתנה לחנות מקומית",
+    "img": "/images/gift-card.jpg",
+    "price": 100,
+    "donerId": { "$oid": "674a1001a1b2c3d4e5f60202" },
+    "categoryId": null
+  }
+]

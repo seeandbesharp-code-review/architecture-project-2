@@ -1,0 +1,89 @@
+<div class="category-manager">
+    <p-toast></p-toast>
+
+    <div class="page-header">
+        <h1><i class="pi pi-tags"></i> ניהול קטגוריות</h1>
+        <p>הוספה, עריכה ומחיקה של קטגוריות מתנות</p>
+    </div>
+
+    <p-toolbar styleClass="custom-toolbar">
+        <ng-template pTemplate="left"></ng-template>
+        <ng-template pTemplate="right">
+            <button pButton label="קטגוריה חדשה" icon="pi pi-plus" 
+                    class="btn-add" (click)="openAddDialog()">
+            </button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table [value]="categories()" [rows]="7" [paginator]="true" 
+             styleClass="neon-card-table p-datatable-no-border">
+        
+        <ng-template pTemplate="body" let-cat>
+            <tr [style.--cat-color]="cat.color" 
+                [style.--cat-color-alpha]="cat.color + '15'"
+                [style.--cat-glow]="cat.color + '45'">
+                
+                <td class="content-cell">
+                    <div class="text-container">
+                        <span class="cat-name">{{cat.name}}</span>
+                        <span class="cat-hex">HEX: {{cat.color}}</span>
+                    </div>
+                </td>
+                
+
+                <td class="actions-cell">
+                    <button pButton icon="pi pi-pencil" 
+class="p-button-rounded p-button-text action-btn edit-icon"
+                            (click)="openEditDialog(cat)">
+                    </button>
+                    <button pButton icon="pi pi-trash" 
+class="p-button-rounded p-button-text action-btn delete-icon"
+                            (click)="deleteCategory(cat.id)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="addDialog" [style]="{width: '400px'}" header="יצירת קטגוריה" [modal]="true" styleClass="cs-dialog">
+    <ng-template pTemplate="content">
+        <div class="form-field">
+            <label class="font-bold">שם הקטגוריה *</label>
+            <input type="text" pInputText [(ngModel)]="newCategory.name" class="w-full" />
+            @if (submitted && !newCategory.name?.trim()) {
+                <span class="field-error">שדה חובה</span>
+            }
+        </div>
+        <div class="field">
+            <label class="block mb-2 font-bold">צבע מזהה</label>
+            <input type="color" [(ngModel)]="newCategory.color" class="color-picker-input" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton label="ביטול" class="p-button-text" (click)="addDialog = false"></button>
+        <button pButton label="שמור" class="btn-add" (click)="saveNewCategory()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="editDialog" [style]="{width: '400px'}" header="עדכון קטגוריה" [modal]="true" styleClass="cs-dialog">
+    <ng-template pTemplate="content">
+        @if (selectedCategory) {
+        <div class="form-field">
+            <label>שם הקטגוריה *</label>
+            <input type="text" pInputText [(ngModel)]="selectedCategory.name" class="w-full" />
+            @if (submitted && !selectedCategory.name?.trim()) {
+                <span class="field-error">שדה חובה</span>
+            }
+        </div>
+        <div class="form-field">
+            <label>צבע</label>
+            <input type="color" [(ngModel)]="selectedCategory.color" class="color-picker-input" />
+        </div>
+        }
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton label="ביטול" class="p-button-text" (click)="editDialog = false"></button>
+        <button pButton label="עדכן" class="btn-add" (click)="saveUpdateCategory()"></button>
+    </ng-template>
+</p-dialog>
