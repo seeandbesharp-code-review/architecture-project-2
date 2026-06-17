@@ -18,7 +18,7 @@ namespace SaleApi.Repositories
             try
             {
                 return await _context.Gifts.Include(g => g.Doner)
-                     .AsNoTracking().ToListAsync();
+                     .AsNoTracking().Take(100).ToListAsync();
             }
             catch (Exception ex)
             {

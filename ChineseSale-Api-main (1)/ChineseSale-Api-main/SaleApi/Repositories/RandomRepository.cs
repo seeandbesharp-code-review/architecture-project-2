@@ -18,7 +18,7 @@ namespace SaleApi.Repositories
             return await _context.Orders
                 .Where(o => o.IdGift == giftId)
                 .Select(o => o.Id)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<bool> IsGiftRandom(int giftId)
@@ -51,7 +51,7 @@ namespace SaleApi.Repositories
 
         public async Task<IEnumerable<Winner>> GetDrawnGiftIdsAsync()
         {
-            return await _context.Winners.Include(w => w.User).Include(w => w.Gift).ToListAsync();
+            return await _context.Winners.Include(w => w.User).Include(w => w.Gift).Take(100).ToListAsync();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SaleApi.Repositories
 
         public async Task<IEnumerable<Doner>> GetAllDoner()
         {
-            return await _context.Doners.ToListAsync();
+            return await _context.Doners.Take(100).ToListAsync();
         }
 
         public async Task<Doner> NewDoner(Doner doner)
@@ -59,7 +59,7 @@ namespace SaleApi.Repositories
 
         public async Task<IEnumerable<Doner>> GetAllDonerWithGift()
         {
-            return await _context.Doners.Include(d => d.Gifts).ToListAsync();
+            return await _context.Doners.Include(d => d.Gifts).Take(100).ToListAsync();
         }
 
         public async Task<Doner?> GetDonerByIdWithGift(int id)
@@ -78,7 +78,7 @@ namespace SaleApi.Repositories
                     d.LastName.Contains(term) ||
                     (d.FirstName + " " + d.LastName).Contains(term) ||
                     (d.LastName + " " + d.FirstName).Contains(term))
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Doner?>> GetDonerByMail(string email)
@@ -87,7 +87,7 @@ namespace SaleApi.Repositories
             return await _context.Doners
                 .Include(d => d.Gifts)
                 .Where(d => d.Email.Contains(term))
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Doner?>> GetDonerByGift(string giftName)
@@ -96,7 +96,7 @@ namespace SaleApi.Repositories
             return await _context.Doners
                 .Include(g => g.Gifts)
                 .Where(g => g.Gifts.Any(gift => gift.Name.Contains(term)))
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<bool> EmailExistsAsync(string email)

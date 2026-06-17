@@ -32,7 +32,7 @@ public static class AdminSeeder
 
         if (promoteAllUsersInDev)
         {
-            var users = await context.Users.ToListAsync();
+            var users = await context.Users.Take(100).ToListAsync();
             foreach (var user in users)
             {
                 user.Role = UserRole.Admin;

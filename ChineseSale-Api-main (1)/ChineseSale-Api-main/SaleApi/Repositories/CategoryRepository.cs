@@ -15,7 +15,7 @@ namespace SaleApi.Repositories
 
         public async Task<IEnumerable<Category>> GetAllCategory()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories.Take(100).ToListAsync();
         }
 
         public async Task<Category> NewCategory(Category category)
@@ -50,7 +50,7 @@ namespace SaleApi.Repositories
         public async Task<List<Gift>> GetGiftByCategoryId(int categoryId)
         {
             return await _context.Gifts.Where(g => g.CategoryId == categoryId)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
     }
 }

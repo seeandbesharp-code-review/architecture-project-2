@@ -15,7 +15,7 @@ namespace SaleApi.Repositories
             return await _context.Orders
                 .Include(o => o.Gift)
                 .Include(o => o.User)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<Order> AddOrder(Order order)
@@ -37,7 +37,7 @@ namespace SaleApi.Repositories
                 .Where(o => o.IdGift == giftId)
                 .Include(o => o.User)
                 .Include(o => o.Gift)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Order>> GetOrdersByUserId(int userId)
@@ -45,7 +45,7 @@ namespace SaleApi.Repositories
             return await _context.Orders
                 .Where(o => o.IdUser == userId)
                 .Include(o => o.Gift)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Order>> GetOrdersSortedByPopularity()
@@ -56,7 +56,7 @@ namespace SaleApi.Repositories
                 .GroupBy(o => o.IdGift)
                 .OrderByDescending(g => g.Count())
                 .SelectMany(g => g)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Order>> GetOrdersSortedByPrice()
@@ -65,7 +65,7 @@ namespace SaleApi.Repositories
                 .Include(o => o.Gift)
                 .Include(o => o.User)
                 .OrderByDescending(o => o.Gift.Price)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
     }
 }

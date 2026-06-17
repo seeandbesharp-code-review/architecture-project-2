@@ -15,7 +15,7 @@ namespace SaleApi.Repositories
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Take(100).ToListAsync();
         }
 
         public async Task<bool> EmailExistsAsync(string email)

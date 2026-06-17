@@ -176,6 +176,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler("/error");
 app.UseRouting();
 app.UseCors("AngularPolicy");
 app.UseRateLimiter();

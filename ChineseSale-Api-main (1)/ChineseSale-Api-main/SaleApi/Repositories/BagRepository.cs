@@ -15,7 +15,7 @@ namespace SaleApi.Repositories
 
         public async Task<IEnumerable<Bag>> GetAllBag()
         {
-            return await _context.Bags.Include(b => b.Gift).ToListAsync();
+            return await _context.Bags.Include(b => b.Gift).Take(100).ToListAsync();
         }
 
         public async Task<Bag> NewGiftToBag(Bag bag)
@@ -49,7 +49,7 @@ namespace SaleApi.Repositories
 
         public async Task ClearUserBag(int userId)
         {
-            var userItems = await _context.Bags.Where(b => b.IdUser == userId).ToListAsync();
+            var userItems = await _context.Bags.Where(b => b.IdUser == userId).Take(100).ToListAsync();
             if (userItems.Any())
             {
                 _context.Bags.RemoveRange(userItems);
@@ -79,7 +79,7 @@ namespace SaleApi.Repositories
             return await _context.Bags
                 .Include(b => b.Gift)
                 .Where(b => b.IdUser == id)
-                .ToListAsync();
+                .Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<Bag?>> GetBagByGift(int id)
